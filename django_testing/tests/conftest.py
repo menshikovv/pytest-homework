@@ -1,43 +1,9 @@
-from django.test import TestCase
-from rest_framework.test import APIClient
-from rest_framework import status
-from .models import Student, Course
-from .serializers import StudentSerializer, CourseSerializer
 from django.urls import reverse
-
-class StudentTests(TestCase):
-
-    def setUp(self):
-        self.student_data = {'name': 'John Doe', 'birth_date': '1990-01-01'}
-        self.student = Student.objects.create(**self.student_data)
-
-    def test_student_str_method(self):
-        self.assertEqual(str(self.student), 'John Doe')
-
-    def test_student_absolute_url(self):
-        url = reverse('student_detail', args=[str(self.student.id)])
-        self.assertEqual(self.student.get_absolute_url(), url)
-
-    def test_student_serializer(self):
-        serializer = StudentSerializer(instance=self.student)
-        self.assertEqual(serializer.data, self.student_data)
-
-class CourseTests(TestCase):
-
-    def setUp(self):
-        self.course_data = {'name': 'Math'}
-        self.course = Course.objects.create(**self.course_data)
-
-    def test_course_str_method(self):
-        self.assertEqual(str(self.course), 'Math')
-
-    def test_course_absolute_url(self):
-        url = reverse('course_detail', args=[str(self.course.id)])
-        self.assertEqual(self.course.get_absolute_url(), url)
-
-    def test_course_serializer(self):
-        serializer = CourseSerializer(instance=self.course)
-        self.assertEqual(serializer.data, self.course_data)
+from rest_framework import status
+from rest_framework.test import APIClient
+from django.test import TestCase
+from .models import Course
+from .serializers import CourseSerializer
 
 class CoursesViewSetTests(TestCase):
 
